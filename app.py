@@ -1,18 +1,9 @@
 from flask import Flask, jsonify, render_template
-import threading
-import time
 
 app = Flask(__name__)
 
-# Global variable to store the count
+# Use a global variable for simplicity. In a real-world app, you'd use a database.
 count = 0
-
-def increment_count():
-    global count
-    while True:
-        time.sleep(1)
-        count += 1
-        print(f"Count incremented: {count}")
 
 @app.route('/')
 def index():
@@ -20,13 +11,10 @@ def index():
 
 @app.route('/api/count', methods=['GET'])
 def get_count():
+    global count
+    count += 1
     return jsonify({"count": count})
 
 if __name__ == '__main__':
-    # Start the background thread to increment the count
-    counter_thread = threading.Thread(target=increment_count)
-    counter_thread.daemon = True
-    counter_thread.start()
-
-    # Run the Flask app
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # This is only used for local development
+    app.run(debug=True)
