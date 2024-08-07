@@ -11,7 +11,6 @@ def increment_count():
     global count
     while True:
         time.sleep(1)
-        global count
         count += 1
         print(f"Count incremented: {count}")
 
@@ -30,4 +29,4 @@ if __name__ == '__main__':
     counter_thread.start()
 
     # Run the Flask app
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
